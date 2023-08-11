@@ -1,0 +1,17 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Simuluation Data Experiments"
+  navbar:
+    right:
+      - testing.qmd
+      - reprodicibility.qmd
+format:
+  html:
+    theme: slate
+    css: styles.css
+
+
+

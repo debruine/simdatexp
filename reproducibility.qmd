@@ -1,0 +1,41 @@
+---
+title: "Reproducibility"
+author: "Lisa DeBruine"
+format: html
+---
+
+Using simulation to create reproducible workflows (e.g., for sensitive data). 
+
+```{r}
+library(faux)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+```
+
+## Simple Example with Faux
+
+```{r}
+iris |>
+  mutate(id = row_number()) |>
+  pivot_longer(Sepal.Length:Petal.Width) |>
+  ggplot(aes(x = name, y = value, color = Species, fill = Species)) +
+  geom_boxplot(alpha = 0.2)
+```
+
+
+```{r}
+simiris <- sim_df(iris, n = 50, between = "Species")
+```
+
+```{r}
+simiris |>
+  mutate(id = row_number()) |>
+  pivot_longer(Sepal.Length:Petal.Width) |>
+  ggplot(aes(x = name, y = value, color = Species, fill = Species)) +
+  geom_boxplot(alpha = 0.2)
+```
+
+## More Complex Example wit Synthpop
+
+To DO
