@@ -7,11 +7,14 @@ website:
   navbar:
     right:
       - testing.qmd
-      - reprodicibility.qmd
+      - confidential.qmd
 format:
   html:
-    theme: slate
+    theme: 
+      light: flatly
+      dark: darkly
     css: styles.css
+    df-print: paged
 
 
 

@@ -1,12 +1,11 @@
 ---
-title: "Reproducibility"
+title: "Confidential Data"
 author: "Lisa DeBruine"
-format: html
 ---
 
-Using simulation to create reproducible workflows (e.g., for sensitive data). 
+Using simulation to create reproducible workflows for sensitive data. 
 
-```{r}
+```{r, message=FALSE}
 library(faux)
 library(ggplot2)
 library(dplyr)

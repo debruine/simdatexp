@@ -1,4 +1,6 @@
 ---
-title: "Untitled"
+title: "Simulation Data Examples"
 ---
 
+* [Testing Statistical Methods](testing.html)
+* [Sharing Confidential Data](confidential.html)

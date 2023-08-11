@@ -1,11 +1,20 @@
 ---
 title: "Testing"
 author: "Lisa DeBruine"
-format: html
+format:
+  html:
+    toc: true
+    toc-expand: true
 ---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+```
+
 
 ```{r, message=FALSE}
 library(faux)     # for multilevel data simulation
+library(testthat) # for unit tests
 library(dplyr)    # for data manipulation
 library(ggplot2)  # for plotting
 library(ggridges) # for ridge plots
@@ -19,7 +28,60 @@ theme_set(theme_minimal())
 
 Using simulation to create unit tests for a code base or statistical method.
 
-## Example
+## Simple Example
+
+Simulate data for a between-subjects design.
+
+```{r}
+messydat <- sim_design(
+  between = list(gender = c("male", "female", "nonbinary")),
+  n = c(male = 30, female = 50, nonbinary = 5),
+  mu = c(100, 110, 105),
+  sd = 20,
+  dv = "score"
+) |>
+  # set 5% of gender and score values to NA
+  messy(prop = 0.05, "gender", "score")
+```
+
+Check that the data can be analysed in the desired way.
+
+```{r}
+t.test(score ~ gender, data = messydat)
+```
+
+Write unit tests to make sure that the data have the desired properties. Use simulation to check that the tests fail and succeed appropriately.
+
+```{r}
+cleandat <- messydat |>
+  filter(gender %in% c("male", "female"),
+         !is.na(score))
+```
+
+Check that there are no missing scores
+
+You can write a test the tells you TRUE or FALSE if the data pass or fail your test:
+
+```{r}
+# Check that there are no missing scores
+all(!is.na(cleandat$score))
+all(!is.na(messydat$score))
+```
+
+Or you can use functions from testthat to produce an error if your check fails, but proceed silently if it passes.
+
+```{r}
+# Check that gender is only male or female
+expect_true( cleandat$gender %in% c("female", "male") |> all() )
+expect_true( messydat$gender %in% c("female", "male") |> all() )
+```
+
+
+
+
+
+
+## Complex Example
 
 Create data where you know the ground truth in order to, for example, check the false positive rate of a statistical test.
 

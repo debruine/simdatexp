@@ -3,3 +3,7 @@
 .navbar-logo {
   max-height: 50px;
 }
+
+pre code {
+  white-space: pre-wrap;
+}
